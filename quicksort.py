@@ -1,4 +1,4 @@
-# Quicksort
+# Quicksort Implementation Attempt
 # Chooses a section of a list and a pivot, moves everything in the section
 # based on its relation to the pivot
 
