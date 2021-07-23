@@ -1,5 +1,4 @@
 # Question 1.6
-# TODO: write a decoder for the encoded string
 
 # input: uncompressed string
 # output: compressed string
