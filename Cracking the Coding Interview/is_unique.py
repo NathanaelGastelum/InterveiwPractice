@@ -1,3 +1,5 @@
+# Question 1.1
+
 def isUnique(string):
     charSet = set()
 
@@ -11,4 +13,4 @@ def isUnique(string):
 string = "worldw"
 print(isUnique(string))
 
-# if not allowed to use other data structures, sort the string (with sort(string)) and then check for matching adjacent characters
+# TODO: if not allowed to use other data structures, sort the string (with sort(string)) and then check for matching adjacent characters
