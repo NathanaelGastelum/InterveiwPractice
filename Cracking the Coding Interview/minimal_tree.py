@@ -20,4 +20,36 @@ def min_tree(array):
 
     return node
 
-# TODO: test code
+# functions for testing code
+def in_order_traverse(root):
+    result = []
+    stack = []
+
+    current_node = root
+    while current_node != None or len(stack) != 0:
+        while current_node != None:
+            stack.append(current_node)
+            current_node = current_node.left
+
+        current_node = stack.pop()
+        result.append(current_node.val)
+        current_node = current_node.right
+
+    return result
+
+def height(bst):
+    if bst == None:
+        return 0
+    else:
+        return 1 + max(height(bst.left), height(bst.right))
+
+
+test = [[1,2,3,4,5,6,7,8,9,10]]
+expected_height = [4]
+
+for i in range(len(test)):
+    bst = min_tree(test[i])
+    inorder = in_order_traverse(bst)
+    actual_height = height(bst)
+    assert inorder == test[i], f"Test {i}: expected: {test[i]}, recieved: {inorder}"
+    assert actual_height == expected_height[i], f"Test {i}: expected: {expected_height[i]}, recieved: {actual_height}"
