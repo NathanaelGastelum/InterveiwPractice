@@ -1,5 +1,6 @@
 # LeetCode Medium
 
+# TODO: make O(nm) by consuming a set
 # inputs: 2D array
 # outputs: number of "islands" present in the array
 

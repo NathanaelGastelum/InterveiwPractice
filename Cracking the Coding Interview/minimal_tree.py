@@ -1,5 +1,7 @@
 # Question 4.2
 
+# TODO: implement without additional data structure
+
 # Input: sorted array
 # Output: binary search tree with minimal height (this ends up just being the root node, no extra data structure needed)
 
@@ -10,7 +12,7 @@ class Node:
         self.val = value
 
 def min_tree(array):
-    if len(array) < 1: return
+    if len(array) < 1: return # TODO: could just be if not array?
 
     mid = len(array) // 2
     node = Node(array[mid])
@@ -26,7 +28,7 @@ def in_order_traverse(root):
     stack = []
 
     current_node = root
-    while current_node != None or len(stack) != 0:
+    while current_node != None or len(stack) != 0: #TODO: make more pythonic
         while current_node != None:
             stack.append(current_node)
             current_node = current_node.left
