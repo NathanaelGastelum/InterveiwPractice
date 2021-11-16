@@ -1,8 +1,11 @@
 # https://techdevguide.withgoogle.com/resources/former-interview-question-flatten-iterators/#!
 
-# Given an iterator of iterators, implement an interleaving iterator that takes in an iterator of iterators, and emits elements from the nested iterators in interleaved order. That is, if we had the iterators i and j iterating over the elements [ia, ib, ic] and [ja, jb] respectively, the order in which your interleaving iterator should emit the elements would be [ia, ja, ib, jb, ic].
+# Given an iterator of iterators, implement an interleaving iterator that takes in an iterator of iterators, 
+# and emits elements from the nested iterators in interleaved order. That is, if we had the iterators i and j iterating over the elements [ia, ib, ic] 
+# and [ja, jb] respectively, the order in which your interleaving iterator should emit the elements would be [ia, ja, ib, jb, ic].
 
-# Your interleaving iterator should implement the Iterator interface, take in the iterator of iterators in its constructor, and provide the next and hasNext methods. Assume that there are no additional methods offered by the iterator.
+# Your interleaving iterator should implement the Iterator interface, take in the iterator of iterators in its constructor, 
+# and provide the next and hasNext methods. Assume that there are no additional methods offered by the iterator.
 
 # Given the following three iterators put into an array of iterators build an “Interleaving Flattener” (IF), which works much like an iterator:
 
@@ -21,6 +24,9 @@ iterlist = [a, b, c]
 
 class IF:
     def __init__(self, iterlist):
+        # TODO: implement with circular linked list or touple
+        # a queue works logically, but adds unnecessary overhead when poping/adding to the back
+        # instead of caching the entire data, just link the iterators
         self.queue = deque()
         temp_queues = deque()
 
