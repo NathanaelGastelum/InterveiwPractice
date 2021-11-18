@@ -17,19 +17,39 @@
 # It’s also a good example of why careful analysis for Big-O performance is often worthwhile, 
 # as is careful exploration of common and worst-case input conditions.
 
+from collections import deque
+
 def longest_word(S, D):
-    w = ""
+    # sort in order to avoid checking smaller words first
+    D.sort(key=str.__len__, reverse=True)
 
     for word in D:
         if is_subsequence(word, S):
-            if len(word) > len(w):
-                w = word
+            return word
 
-    return w
+    return None
 
+
+# brute force? at first I thought it was more optimal than the greedy function, but I see now that it's 2^n each time the function is called
+# Maybe this would be the best option for a class that gets multiple queries?
+def all_subsequences(string):
+    subsequences = set()
+    for i in range(len(string)):
+        queue = deque(string[i])
+
+        while queue:
+            current = queue.popleft()
+            subsequences.add("".join(current))
+            for j in range(i, len(string)):
+                queue.append(current + string[j])
+
+    return subsequences
+
+# Apparently this is a greedy implementation?
 def is_subsequence(word, string):
     j = 0
     for i in range(len(word)):
+        # TODO: improve by not scanning every letter in string
         while string[j] != word[i]:
             j += 1
             if j >= len(string): 
