@@ -9,9 +9,6 @@
 
 # Given the following three iterators put into an array of iterators build an “Interleaving Flattener” (IF), which works much like an iterator:
 
-from collections import deque
-
-
 arr1 = [1, 2, 3]
 arr2 = [4, 5]
 arr3 = [6, 7, 8, 9]
@@ -24,30 +21,36 @@ iterlist = [a, b, c]
 
 class IF:
     def __init__(self, iterlist):
-        # TODO: implement with circular linked list or touple
+        # implement with circular linked list or touple
         # a queue works logically, but adds unnecessary overhead when poping/adding to the back
         # instead of caching the entire data, just link the iterators
-        self.queue = deque()
-        temp_queues = deque()
 
-        for i, iter in enumerate(iterlist):
-            temp_queue = deque()
-            for e in iter:
-                temp_queue.append(e)
-            temp_queues.append(temp_queue)
-        
-        while temp_queues:
-            temp_queue = temp_queues.popleft()
-            e = temp_queue.popleft()
-            self.queue.append(e)
-            if temp_queue:
-                temp_queues.append(temp_queue)
+        # construct circular linked list of iters
+        self.head = [None, None]
+        self.current = self.head
+        for i in range(len(iterlist)):
+            self.current[0] = iterlist[i]
+            if i == len(iterlist) - 1:
+                self.current[1] = self.head
+            else:
+                self.current[1] = [None, None]
+            self.current = self.current[1]
 
     def next(self):
-        return self.queue.popleft()
+        # TODO: fix next() skiping the first element
+        # remove empty nodes
+        while True:
+            try:
+                next = self.current[1][0].__next__()
+                break
+            except StopIteration:
+                self.current[1] = self.current[1][1]
+
+        self.current = self.current[1]
+        return next
 
     def has_next(self):
-        if self.queue: return True
+        if self.current[1]: return True
 
 # test
 itfl = IF(iterlist)
