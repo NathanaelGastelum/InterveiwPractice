@@ -6,30 +6,37 @@
 
 def islands(grid):
     count = 0
+    visited = set()
 
     for i in range(len(grid)):
         for j in range(len(grid[0])):
-            if grid[i][j] == "1":
+            if grid[i][j] == "1" and (i, j) not in visited:
                 count += 1
-                dfs(grid, i, j)
+                dfs(grid, i, j, visited)
     
     return count
 
-def dfs(grid, i, j):
-    # base case, watch those '>=' for len, don't forget the '='
-    if i < 0 or j < 0 or i >= len(grid) or j >= len(grid[0]) or grid[i][j] != "1":
+def dfs(grid, row, col, visited):
+    # base case
+    if grid[row][col] != "1" or (row,col) in visited:
         return
     # set element as visited
-    grid[i][j] = "*"
-    
-    # up
-    dfs(grid, i+1, j)
-    # down
-    dfs(grid, i-1, j)
-    # left
-    dfs(grid, i, j-1)
-    # right
-    dfs(grid, i, j+1)
+    visited.add((row, col))
+
+    for neighbor in get_neighbors(grid, row, col):
+        dfs(grid, neighbor[0], neighbor[1], visited)
+
+def get_neighbors(grid, row, col):
+    neighbors = []
+    moves = [(-1,0), (1,0), (0,-1), (0,1)]
+
+    for i, j in moves:
+        temp_row = row + i
+        temp_col = col + j
+        if temp_row >= 0 and temp_row < len(grid) and temp_col >=0 and temp_col < len(grid[0]) and (temp_row, temp_col) != (row, col):
+            neighbors.append((temp_row,temp_col))
+
+    return neighbors
 
 
 # tests
