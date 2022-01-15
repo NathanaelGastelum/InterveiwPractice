@@ -1,39 +1,40 @@
 # LeetCode Medium
 
-# TODO: make O(nm) by consuming a set
+# TODO: figure out why making O(nm) by consuming a set is actually slower
 # inputs: 2D array
 # outputs: number of "islands" present in the array
 
 def islands(grid):
     count = 0
-    visited = set()
+    grid_set = {(row, col) for row in range(len(grid)) for col in range(len(grid[0])) 
+                if grid[row][col] == "1"}
 
-    for i in range(len(grid)):
-        for j in range(len(grid[0])):
-            if grid[i][j] == "1" and (i, j) not in visited:
-                count += 1
-                dfs(grid, i, j, visited)
-    
+    while grid_set:
+        count += 1
+        location = iter(grid_set).__next__()
+        dfs(grid_set, location[0], location[1])
+
     return count
 
-def dfs(grid, row, col, visited):
+def dfs(grid_set, row, col):
     # base case
-    if grid[row][col] != "1" or (row,col) in visited:
+    if (row, col) not in grid_set:
         return
-    # set element as visited
-    visited.add((row, col))
+    
+    # remove visited location from set
+    grid_set.remove((row, col))
 
-    for neighbor in get_neighbors(grid, row, col):
-        dfs(grid, neighbor[0], neighbor[1], visited)
+    for neighbor in get_neighbors(grid_set, row, col):
+        dfs(grid_set, neighbor[0], neighbor[1])
 
-def get_neighbors(grid, row, col):
+def get_neighbors(grid_set, row, col):
     neighbors = []
     moves = [(-1,0), (1,0), (0,-1), (0,1)]
 
     for i, j in moves:
         temp_row = row + i
         temp_col = col + j
-        if temp_row >= 0 and temp_row < len(grid) and temp_col >=0 and temp_col < len(grid[0]) and (temp_row, temp_col) != (row, col):
+        if (temp_row, temp_col) != (row, col):
             neighbors.append((temp_row,temp_col))
 
     return neighbors
